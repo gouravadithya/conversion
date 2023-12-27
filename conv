@@ -1,0 +1,19 @@
+from pdf2image import convert_from_path
+from PIL import Image
+import os
+try:
+    input_path = input("Enter the path of the PDF file: ")
+    if os.path.isfile(input_path):
+        output_folder = "output_images"
+        os.makedirs(output_folder, exist_ok=True)
+        images = convert_from_path(input_path)
+        for i, image in enumerate(images):
+            image_path = os.path.join(output_folder, f'image_{i+1}.png')
+            image.save(image_path, 'PNG')
+        print(f"Images saved in the '{output_folder}' folder.")
+    else:
+        print("File not found. Please enter a valid file path.")
+except FileNotFoundError as e:
+    print("Error: File not found. Please enter a valid file path.")
+except Exception as e:
+    print(f"An error occurred: {e}")
